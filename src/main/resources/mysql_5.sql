@@ -8,6 +8,9 @@
 # Created on:            2011-06-11 21:01                                #
 # ---------------------------------------------------------------------- #
 
+DROP SCHEMA IF EXISTS rbac;
+CREATE SCHEMA rbac;
+USE rbac;
 
 # ---------------------------------------------------------------------- #
 # Tables                                                                 #
@@ -64,7 +67,7 @@ CREATE TABLE `sessions` (
     `session_id` INTEGER NOT NULL,
     `user_id` INTEGER NOT NULL,
     `name` VARCHAR(64) NOT NULL,
-    `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`session_id`)
 );
 
