@@ -10,10 +10,10 @@ import com.google.common.collect.ImmutableList;
 @RegisterMapper(UserMapper.class)
 public interface UsersDAO {
 
-    @SqlQuery("select username, first_name, family_name, email from users where user_id = :id")
+    @SqlQuery("select user_id, username, first_name, family_name, email from users where user_id = :id")
     User findUserameById(@Bind("id") int id);
 
-    @SqlQuery("select username, first_name, family_name, email from users ORDER BY family_name ASC")
+    @SqlQuery("select user_id, username, first_name, family_name, email from users ORDER BY family_name ASC")
     ImmutableList<User> findAllUsers();
 
 }
