@@ -1,55 +1,57 @@
-/**
- * 
- */
 package com.acme;
+
+import org.skife.jdbi.v2.DBI;
 
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
+import com.yammer.dropwizard.jdbi.DBIFactory;
 
 /**
- * The Class RBACService.
+ * The main entry point into a RBAC Dropwizard based service.
  */
 public class RBACService extends Service<RBACConfiguration> {
 
-	/**
-	 * The main method.
-	 * 
-	 * @param args
-	 *            the arguments
-	 * @throws Exception
-	 *             the exception
-	 */
-	public static void main(String[] args) throws Exception {
-		new RBACService().run(args);
-	}
+    /**
+     * The main method.
+     * 
+     * @param args
+     *            the arguments
+     * @throws Exception
+     *             the exception
+     */
+    public static void main(final String[] args) throws Exception {
+        new RBACService().run(args);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.yammer.dropwizard.Service#initialize(com.yammer.dropwizard.config
-	 * .Bootstrap)
-	 */
-	@Override
-	public void initialize(Bootstrap<RBACConfiguration> bootstrap) {
-		bootstrap.setName("Roles Based Access Control");
-		// TODO Auto-generated method stub
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.yammer.dropwizard.Service#initialize(com.yammer.dropwizard.config
+     * .Bootstrap)
+     */
+    @Override
+    public final void initialize(final Bootstrap<RBACConfiguration> bootstrap) {
+        bootstrap.setName("Roles Based Access Control");
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.yammer.dropwizard.Service#run(com.yammer.dropwizard.config.Configuration
-	 * , com.yammer.dropwizard.config.Environment)
-	 */
-	@Override
-	public void run(RBACConfiguration configuration, Environment environment)
-			throws Exception {
-		// TODO Auto-generated method stub
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.yammer.dropwizard.Service#run(com.yammer.dropwizard.config.Configuration
+     * , com.yammer.dropwizard.config.Environment)
+     */
+    @Override
+    public final void run(final RBACConfiguration configuration,
+            final Environment environment) throws Exception {
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment,
+                configuration.getDatabaseConfiguration(), "mysql");
 
-	}
+    }
 
 }
