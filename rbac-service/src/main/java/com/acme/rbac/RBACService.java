@@ -7,8 +7,10 @@ import com.acme.rbac.resources.UsersResource;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
+import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.jdbi.DBIFactory;
 import com.yammer.dropwizard.jdbi.bundles.DBIExceptionsBundle;
+import com.yammer.dropwizard.migrations.MigrationsBundle;
 
 /**
  * The main entry point into a RBAC Dropwizard based service.
@@ -38,7 +40,13 @@ public class RBACService extends Service<RBACConfiguration> {
     public final void initialize(final Bootstrap<RBACConfiguration> bootstrap) {
         bootstrap.setName("Roles Based Access Control");
         bootstrap.addBundle(new DBIExceptionsBundle());
-        // TODO Auto-generated method stub
+        bootstrap.addBundle(new MigrationsBundle<RBACConfiguration>() {
+            @Override
+            public DatabaseConfiguration getDatabaseConfiguration(
+                    RBACConfiguration configuration) {
+                return configuration.getDatabaseConfiguration();
+            }
+        });
 
     }
 
