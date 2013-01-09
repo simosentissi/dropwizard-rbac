@@ -2,9 +2,12 @@ package com.acme.rbac;
 
 import org.skife.jdbi.v2.DBI;
 
+import com.acme.rbac.auth.SQLAuthenticator;
+import com.acme.rbac.core.User;
 import com.acme.rbac.jdbi.UsersDAO;
 import com.acme.rbac.resources.UsersResource;
 import com.yammer.dropwizard.Service;
+import com.yammer.dropwizard.auth.basic.BasicAuthProvider;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
@@ -39,7 +42,10 @@ public class RBACService extends Service<RBACConfiguration> {
     @Override
     public final void initialize(final Bootstrap<RBACConfiguration> bootstrap) {
         bootstrap.setName("Roles Based Access Control");
+        // handler for jdbi runtime exceptions with the db
         bootstrap.addBundle(new DBIExceptionsBundle());
+        // liquidbase support, reads a file called migrations.xml from
+        // src/main/resources
         bootstrap.addBundle(new MigrationsBundle<RBACConfiguration>() {
             @Override
             public DatabaseConfiguration getDatabaseConfiguration(
@@ -64,8 +70,11 @@ public class RBACService extends Service<RBACConfiguration> {
         final DBI jdbi = factory.build(environment,
                 configuration.getDatabaseConfiguration(), "mysql");
         final UsersDAO usersDao = jdbi.onDemand(UsersDAO.class);
-        environment.addResource(new UsersResource(usersDao));
 
+        environment.addProvider(new BasicAuthProvider<User>(
+                new SQLAuthenticator(usersDao), "SUPER SECRET STUFF"));
+
+        environment.addResource(new UsersResource(usersDao));
     }
 
 }

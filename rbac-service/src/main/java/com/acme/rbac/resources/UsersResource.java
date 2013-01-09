@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import com.acme.rbac.api.User;
 import com.acme.rbac.jdbi.UsersDAO;
 import com.google.common.collect.ImmutableList;
+import com.yammer.dropwizard.auth.Auth;
 import com.yammer.dropwizard.jersey.params.IntParam;
 
 @Path("/users")
@@ -24,7 +25,7 @@ public class UsersResource {
     }
 
     @GET
-    public ImmutableList<User> fetch() {
+    public ImmutableList<User> fetch(@Auth com.acme.rbac.core.User user) {
         return usersDao.findAllUsers();
     }
 

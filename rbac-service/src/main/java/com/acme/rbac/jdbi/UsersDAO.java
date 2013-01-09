@@ -16,4 +16,6 @@ public interface UsersDAO {
     @SqlQuery("select user_id, username, first_name, family_name, email from users ORDER BY family_name ASC")
     ImmutableList<User> findAllUsers();
 
+    @SqlQuery("select password from users where username = :uname")
+    String authenticateUser(@Bind("uname") String uname);
 }
