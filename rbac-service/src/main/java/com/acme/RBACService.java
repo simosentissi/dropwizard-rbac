@@ -2,6 +2,8 @@ package com.acme;
 
 import org.skife.jdbi.v2.DBI;
 
+import com.acme.jdbi.UsersDAO;
+import com.acme.resources.UsersResource;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
@@ -51,6 +53,8 @@ public class RBACService extends Service<RBACConfiguration> {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment,
                 configuration.getDatabaseConfiguration(), "mysql");
+        final UsersDAO usersDao = jdbi.onDemand(UsersDAO.class);
+        environment.addResource(new UsersResource(usersDao));
 
     }
 
