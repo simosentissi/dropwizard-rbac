@@ -1,13 +1,14 @@
-package com.acme;
+package com.acme.rbac;
 
 import org.skife.jdbi.v2.DBI;
 
-import com.acme.jdbi.UsersDAO;
-import com.acme.resources.UsersResource;
+import com.acme.rbac.jdbi.UsersDAO;
+import com.acme.rbac.resources.UsersResource;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.jdbi.DBIFactory;
+import com.yammer.dropwizard.jdbi.bundles.DBIExceptionsBundle;
 
 /**
  * The main entry point into a RBAC Dropwizard based service.
@@ -36,6 +37,7 @@ public class RBACService extends Service<RBACConfiguration> {
     @Override
     public final void initialize(final Bootstrap<RBACConfiguration> bootstrap) {
         bootstrap.setName("Roles Based Access Control");
+        bootstrap.addBundle(new DBIExceptionsBundle());
         // TODO Auto-generated method stub
 
     }

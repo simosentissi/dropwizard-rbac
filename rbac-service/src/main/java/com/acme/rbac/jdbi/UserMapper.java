@@ -1,4 +1,4 @@
-package com.acme.jdbi;
+package com.acme.rbac.jdbi;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

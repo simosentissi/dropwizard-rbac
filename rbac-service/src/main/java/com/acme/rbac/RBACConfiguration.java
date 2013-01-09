@@ -1,4 +1,4 @@
-package com.acme;
+package com.acme.rbac;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

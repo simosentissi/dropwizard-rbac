@@ -19,6 +19,9 @@ public class User {
     @JsonProperty
     private String email;
 
+    @JsonProperty
+    private String password;
+
     public User(String username, String firstName, String familyName,
             String email) {
         this.username = username;
@@ -59,4 +62,11 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

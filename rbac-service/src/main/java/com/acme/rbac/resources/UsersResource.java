@@ -1,6 +1,4 @@
-package com.acme.resources;
-
-import java.util.List;
+package com.acme.rbac.resources;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -9,8 +7,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.acme.jdbi.UsersDAO;
 import com.acme.rbac.api.User;
+import com.acme.rbac.jdbi.UsersDAO;
+import com.google.common.collect.ImmutableList;
 import com.yammer.dropwizard.jersey.params.IntParam;
 
 @Path("/users")
@@ -25,7 +24,7 @@ public class UsersResource {
     }
 
     @GET
-    public List<User> fetch() {
+    public ImmutableList<User> fetch() {
         return usersDao.findAllUsers();
     }
 
