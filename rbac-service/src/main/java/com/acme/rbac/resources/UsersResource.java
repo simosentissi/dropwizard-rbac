@@ -12,6 +12,7 @@ import com.acme.rbac.jdbi.UsersDAO;
 import com.google.common.collect.ImmutableList;
 import com.yammer.dropwizard.auth.Auth;
 import com.yammer.dropwizard.jersey.params.IntParam;
+import com.yammer.metrics.annotation.Timed;
 
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
@@ -25,11 +26,13 @@ public class UsersResource {
     }
 
     @GET
+    @Timed(name = "get-all-users")
     public ImmutableList<User> fetch(@Auth com.acme.rbac.core.User user) {
         return usersDao.findAllUsers();
     }
 
     @GET
+    @Timed(name = "get-user")
     @Path("/{userId}")
     public User fetch(@PathParam("userId") IntParam userId) {
         return usersDao.findUserameById(userId.get());

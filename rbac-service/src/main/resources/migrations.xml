@@ -1,243 +1,251 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
-	<changeSet author="damianoneill (generated)" id="1357746196399-1">
-		<createTable tableName="objects">
-			<column name="object_id" type="INT">
-				<constraints nullable="false" primaryKey="true" />
-			</column>
-			<column name="name" type="VARCHAR(100)">
-				<constraints nullable="false" />
-			</column>
-			<column defaultValueNumeric="0" name="locked" type="INT">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-2">
-		<createTable tableName="operations">
-			<column name="operation_id" type="INT">
-				<constraints nullable="false" primaryKey="true" />
-			</column>
-			<column name="name" type="VARCHAR(100)">
-				<constraints nullable="false" />
-			</column>
-			<column name="_create" type="INT" />
-			<column name="_read" type="INT" />
-			<column name="_update" type="INT" />
-			<column name="_delete" type="INT" />
-			<column defaultValueNumeric="0" name="locked" type="INT">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-3">
-		<createTable tableName="permissions">
-			<column name="permission_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="object_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="operation_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="name" type="VARCHAR(100)">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-4">
-		<createTable tableName="role_permission">
-			<column name="role_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="permission_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-5">
-		<createTable tableName="roles">
-			<column name="role_id" type="INT">
-				<constraints nullable="false" primaryKey="true" />
-			</column>
-			<column name="name" type="VARCHAR(100)">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-6">
-		<createTable tableName="session_role">
-			<column name="role_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="session_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-7">
-		<createTable tableName="sessions">
-			<column name="session_id" type="INT">
-				<constraints nullable="false" primaryKey="true" />
-			</column>
-			<column name="user_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="name" type="VARCHAR(64)">
-				<constraints nullable="false" />
-			</column>
-			<column defaultValueComputed="CURRENT_TIMESTAMP" name="created"
-				type="TIMESTAMP">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-8">
-		<createTable tableName="user_role">
-			<column name="user_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-			<column name="role_id" type="INT">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-9">
-		<createTable tableName="users">
-			<column name="user_id" type="INT">
-				<constraints nullable="false" primaryKey="true" />
-			</column>
-			<column name="username" type="VARCHAR(40)">
-				<constraints nullable="false" />
-			</column>
-			<column name="password" type="VARCHAR(64)">
-				<constraints nullable="false" />
-			</column>
-			<column defaultValueDate="0002-11-30T00:00:00.0" name="nonce"
-				type="DATETIME">
-				<constraints nullable="false" />
-			</column>
-			<column name="first_name" type="VARCHAR(50)">
-				<constraints nullable="false" />
-			</column>
-			<column name="family_name" type="VARCHAR(100)">
-				<constraints nullable="false" />
-			</column>
-			<column name="email" type="VARCHAR(100)">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-10">
-		<addPrimaryKey columnNames="permission_id, object_id, operation_id"
-			tableName="permissions" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-11">
-		<addPrimaryKey columnNames="role_id, permission_id"
-			tableName="role_permission" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-12">
-		<addPrimaryKey columnNames="role_id, session_id"
-			tableName="session_role" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-13">
-		<addPrimaryKey columnNames="user_id, role_id" tableName="user_role" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-14">
-		<addForeignKeyConstraint baseColumnNames="object_id"
-			baseTableName="permissions" baseTableSchemaName="rbac"
-			constraintName="object_permission" deferrable="false"
-			initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
-			referencedColumnNames="object_id" referencedTableName="objects"
-			referencedTableSchemaName="rbac" referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-15">
-		<addForeignKeyConstraint baseColumnNames="operation_id"
-			baseTableName="permissions" baseTableSchemaName="rbac"
-			constraintName="operation_permission" deferrable="false"
-			initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
-			referencedColumnNames="operation_id" referencedTableName="operations"
-			referencedTableSchemaName="rbac" referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-16">
-		<addForeignKeyConstraint baseColumnNames="permission_id"
-			baseTableName="role_permission" baseTableSchemaName="rbac"
-			constraintName="permission_role_permission" deferrable="false"
-			initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
-			referencedColumnNames="permission_id" referencedTableName="permissions"
-			referencedTableSchemaName="rbac" referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-17">
-		<addForeignKeyConstraint baseColumnNames="role_id"
-			baseTableName="role_permission" baseTableSchemaName="rbac"
-			constraintName="role_role_permission" deferrable="false"
-			initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
-			referencedColumnNames="role_id" referencedTableName="roles"
-			referencedTableSchemaName="rbac" referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-18">
-		<addForeignKeyConstraint baseColumnNames="role_id"
-			baseTableName="session_role" baseTableSchemaName="rbac"
-			constraintName="role_session_role" deferrable="false"
-			initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
-			referencedColumnNames="role_id" referencedTableName="roles"
-			referencedTableSchemaName="rbac" referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-19">
-		<addForeignKeyConstraint baseColumnNames="session_id"
-			baseTableName="session_role" baseTableSchemaName="rbac"
-			constraintName="session_session_role" deferrable="false"
-			initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
-			referencedColumnNames="session_id" referencedTableName="sessions"
-			referencedTableSchemaName="rbac" referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-20">
-		<addForeignKeyConstraint baseColumnNames="user_id"
-			baseTableName="sessions" baseTableSchemaName="rbac" constraintName="users_sessions"
-			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
-			onUpdate="CASCADE" referencedColumnNames="user_id"
-			referencedTableName="users" referencedTableSchemaName="rbac"
-			referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-21">
-		<addForeignKeyConstraint baseColumnNames="role_id"
-			baseTableName="user_role" baseTableSchemaName="rbac" constraintName="role_user_role"
-			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
-			onUpdate="CASCADE" referencedColumnNames="role_id"
-			referencedTableName="roles" referencedTableSchemaName="rbac"
-			referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-22">
-		<addForeignKeyConstraint baseColumnNames="user_id"
-			baseTableName="user_role" baseTableSchemaName="rbac" constraintName="user_user_role"
-			deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
-			onUpdate="CASCADE" referencedColumnNames="user_id"
-			referencedTableName="users" referencedTableSchemaName="rbac"
-			referencesUniqueColumn="false" />
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-23">
-		<createIndex indexName="IDX_roles_1" tableName="roles"
-			unique="false">
-			<column name="name" />
-		</createIndex>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-24">
-		<createIndex indexName="IDX_users_1" tableName="users"
-			unique="false">
-			<column name="username" />
-		</createIndex>
-	</changeSet>
-	<changeSet author="damianoneill (generated)" id="1357746196399-25">
-		<insert tableName="Users">
-			<column name="user_id" valueNumeric="0" />
-			<column name="username" value="admin" />
-			<column name="password" value="admin" />
-			<column name="first_name" value="Damian" />
-			<column name="family_name" value="ONeill" />
-			<column name="email" value="doneill@acme.com" />
-		</insert>
-	</changeSet>
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="damianoneill (generated)" id="1357746196399-1">
+        <createTable tableName="objects">
+            <column name="object_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="locked" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-2">
+        <createTable tableName="operations">
+            <column name="operation_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="_create" type="INT"/>
+            <column name="_read" type="INT"/>
+            <column name="_update" type="INT"/>
+            <column name="_delete" type="INT"/>
+            <column defaultValueNumeric="0" name="locked" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-3">
+        <createTable tableName="permissions">
+            <column name="permission_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="object_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="operation_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-4">
+        <createTable tableName="role_permission">
+            <column name="role_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="permission_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-5">
+        <createTable tableName="roles">
+            <column name="role_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-6">
+        <createTable tableName="session_role">
+            <column name="role_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="session_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-7">
+        <createTable tableName="sessions">
+            <column name="session_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created"
+                    type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-8">
+        <createTable tableName="user_role">
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-9">
+        <createTable tableName="users">
+            <column name="user_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueDate="0002-11-30T00:00:00.0" name="nonce"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="family_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-10">
+        <addPrimaryKey columnNames="permission_id, object_id, operation_id"
+                       tableName="permissions"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-11">
+        <addPrimaryKey columnNames="role_id, permission_id"
+                       tableName="role_permission"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-12">
+        <addPrimaryKey columnNames="role_id, session_id"
+                       tableName="session_role"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-13">
+        <addPrimaryKey columnNames="user_id, role_id" tableName="user_role"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-14">
+        <addForeignKeyConstraint baseColumnNames="object_id"
+                                 baseTableName="permissions" baseTableSchemaName="rbac"
+                                 constraintName="object_permission" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="object_id" referencedTableName="objects"
+                                 referencedTableSchemaName="rbac" referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-15">
+        <addForeignKeyConstraint baseColumnNames="operation_id"
+                                 baseTableName="permissions" baseTableSchemaName="rbac"
+                                 constraintName="operation_permission" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="operation_id" referencedTableName="operations"
+                                 referencedTableSchemaName="rbac" referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-16">
+        <addForeignKeyConstraint baseColumnNames="permission_id"
+                                 baseTableName="role_permission" baseTableSchemaName="rbac"
+                                 constraintName="permission_role_permission" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="permission_id" referencedTableName="permissions"
+                                 referencedTableSchemaName="rbac" referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-17">
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="role_permission" baseTableSchemaName="rbac"
+                                 constraintName="role_role_permission" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="role_id" referencedTableName="roles"
+                                 referencedTableSchemaName="rbac" referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-18">
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="session_role" baseTableSchemaName="rbac"
+                                 constraintName="role_session_role" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="role_id" referencedTableName="roles"
+                                 referencedTableSchemaName="rbac" referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-19">
+        <addForeignKeyConstraint baseColumnNames="session_id"
+                                 baseTableName="session_role" baseTableSchemaName="rbac"
+                                 constraintName="session_session_role" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="session_id" referencedTableName="sessions"
+                                 referencedTableSchemaName="rbac" referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-20">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="sessions" baseTableSchemaName="rbac" constraintName="users_sessions"
+                                 deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+                                 onUpdate="CASCADE" referencedColumnNames="user_id"
+                                 referencedTableName="users" referencedTableSchemaName="rbac"
+                                 referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-21">
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="user_role" baseTableSchemaName="rbac" constraintName="role_user_role"
+                                 deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+                                 onUpdate="CASCADE" referencedColumnNames="role_id"
+                                 referencedTableName="roles" referencedTableSchemaName="rbac"
+                                 referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-22">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_role" baseTableSchemaName="rbac" constraintName="user_user_role"
+                                 deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+                                 onUpdate="CASCADE" referencedColumnNames="user_id"
+                                 referencedTableName="users" referencedTableSchemaName="rbac"
+                                 referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-23">
+        <createIndex indexName="IDX_roles_1" tableName="roles"
+                     unique="false">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-24">
+        <createIndex indexName="IDX_users_1" tableName="users"
+                     unique="false">
+            <column name="username"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="damianoneill (generated)" id="1357746196399-25">
+        <insert tableName="Users">
+            <column name="user_id" valueNumeric="0"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="admin"/>
+            <column name="first_name" value="Damian"/>
+            <column name="family_name" value="ONeill"/>
+            <column name="email" value="doneill@acme.com"/>
+        </insert>
+        <insert tableName="Users">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="username" value="user"/>
+            <column name="password" value="user"/>
+            <column name="first_name" value="Homer"/>
+            <column name="family_name" value="Simpson"/>
+            <column name="email" value="hsimpson@acme.com"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
