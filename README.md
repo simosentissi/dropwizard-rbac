@@ -27,12 +27,42 @@ go into your project directory and run
 
     $ mvn package     
 
+Before running the jar ensure that you have a working mysql installation (note any sql db could be used but it would require update to the liquidbase and yml file.  The location of the mysql db (connection string) is defined in  rbac-service/src/main/resources/example.yml 
+
 Now that you’ve built a JAR file, it’s time to run it.
 
 In your project directory, run this:
 
-    $ java -jar target/xxx-0.0.1-SNAPSHOT.jar
+    $ java -jar rbac-service/target/rbac-service-0.0.1-SNAPSHOT.jar server rbac-service/src/main/resources/example.yml
 
+
+You should see something like 
+
+        INFO  [2013-02-28 12:55:50,407] com.yammer.dropwizard.cli.ServerCommand: Starting Roles Based Access Control
+
+	 _____       _             ____                     _                                    _____            _             _ 
+	|  __ \     | |           |  _ \                   | |     /\                           / ____|          | |           | |
+	| |__) |___ | | ___  ___  | |_) | __ _ ___  ___  __| |    /  \   ___ ___ ___  ___ ___  | |     ___  _ __ | |_ _ __ ___ | |
+	|  _  // _ \| |/ _ \/ __| |  _ < / _` / __|/ _ \/ _` |   / /\ \ / __/ __/ _ \/ __/ __| | |    / _ \| '_ \| __| '__/ _ \| |
+	| | \ \ (_) | |  __/\__ \ | |_) | (_| \__ \  __/ (_| |  / ____ \ (_| (_|  __/\__ \__ \ | |___| (_) | | | | |_| | | (_) | |
+	|_|  \_\___/|_|\___||___/ |____/ \__,_|___/\___|\__,_| /_/    \_\___\___\___||___/___/  \_____\___/|_| |_|\__|_|  \___/|_|
+
+
+
+
+       INFO  [2013-02-28 12:55:50,409] org.eclipse.jetty.server.Server: jetty-8.y.z-SNAPSHOT
+       INFO  [2013-02-28 12:55:50,536] com.sun.jersey.server.impl.application.WebApplicationImpl: Initiating Jersey application, version 'Jersey: 1.15 10/30/2012 02:40 PM'
+       INFO  [2013-02-28 12:55:50,597] com.yammer.dropwizard.config.Environment: 
+
+	   GET     /users (com.acme.rbac.resources.UsersResource)
+	   GET     /users/{userId} (com.acme.rbac.resources.UsersResource)
+
+       INFO  [2013-02-28 12:55:50,597] com.yammer.dropwizard.config.Environment: tasks = 
+
+	   POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
+
+       INFO  [2013-02-28 12:55:50,808] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
+       INFO  [2013-02-28 12:55:50,811] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:8081
 
 credits
 =======
